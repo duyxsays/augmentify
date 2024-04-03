@@ -3,28 +3,21 @@
 import aug_methods as am 
 import os
 
+# %%
+# place each category of sample in the samples directory
+data_dir = os.path.join(os.getcwd(), 'samples')
 # %% 
-# list categories
-root = 'root-of-samples'
-
-am.delete_ds_store(root)
-
-categories = os.listdir(root)
-categories.sort()
-
-print('Available categories: \n')
-for category in categories:
-    index = categories.index(category)
-    print(str(index) + ': ' + category)
+# check if all the categories are printed
+categories = am.list_data_folders(data_dir)
 
 # %%
 # select a category
-index = 5 # <- select a directory/category 
+index = 0 # <- select a directory/category 
 selected_category = categories[index] 
 
 print('\nChosen category: ' + selected_category)
 
-category_dir = os.path.join(root, selected_category)
+category_dir = os.path.join(data_dir, selected_category)
 
 # %%
 # read sample directories
@@ -43,20 +36,13 @@ am.pitch_shift_samples(inverted, shifted, selected_category, "1", "1")          
 am.time_stretch_samples(shifted, stretched, selected_category, "1", "1")                     # 3. Time stretch the samples
 am.move_data(augmented_root, destination, stretched, selected_category, "1", "1")            # 4. Move the augmented samples to the destination folder
 
-
 # %%
 # reduce the samples to one second
 am.reduce_samples(augmented_root)                                                           # 6. Reduce the samples to one second
 
 # %%
-
-# %%
 # create a time histogram
-
-# to remove .DS_Store files run the following command in the terminal
-# find . -name '.DS_Store' -type f -delete
-
-am.analyse_duration(augmented_root)                             # 5. Create a time histogram of the original and augmented samples
+am.analyse_duration(augmented_root)                                                         # 7. Create a time histogram of the original and augmented samples
 
 # %%
 # run the entire augmentation process
