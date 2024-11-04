@@ -22,7 +22,7 @@ def polarity_invert_samples(input, output, category, progress, total):
         output_path = os.path.join(output, 'inverted_' + sample)
         copy_path = os.path.join(output, sample)
         
-        mask, env = envelope(inverted_audio, sr, 0.01)
+        mask, _ = envelope(inverted_audio, sr, 0.01)
         
         sf.write(output_path, inverted_audio[mask], sr)
         sf.write(copy_path, signal[mask], sr)
@@ -44,7 +44,7 @@ def pitch_shift_samples(input, output, category, progress, total):
             shifted_audio = lr.effects.pitch_shift(y=signal, sr=sr, n_steps=semitone)
             output_path = os.path.join(output, 'pitch_shift_' + str(semitone) + '_' + sample)
 
-            mask, env = envelope(shifted_audio, sr, 0.01)
+            mask, _ = envelope(shifted_audio, sr, 0.01)
 
             sf.write(output_path, shifted_audio[mask], sr)
 
@@ -67,7 +67,7 @@ def time_stretch_samples(input, output, category, progress, total):
             stretched_audio = lr.effects.time_stretch(y=signal, rate=rate)
             output_path = os.path.join(output, 'time_stretch_' + str(rate) + '_' + sample)
 
-            mask, env = envelope(stretched_audio, sr, 0.01)
+            mask, _ = envelope(stretched_audio, sr, 0.01)
             
             sf.write(output_path, stretched_audio[mask], sr)
 
